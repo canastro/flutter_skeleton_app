@@ -48,18 +48,6 @@ class PicassoData {
   /// A lighter generated material [ThemeData] using colors from [palette]
   late final ThemeData materialLightTheme = generateThemeData(palette);
 
-  /// A material theme for parts of a picasso app that uses an alternate theme,
-  /// It uses [PicassoPalette.lily] as main background shade
-  late final ThemeData alternateMaterialLightTheme =
-      materialLightTheme.copyWith(
-    colorScheme: materialLightTheme.colorScheme.copyWith(
-      background: palette.lily.shade500,
-      surface: palette.lily.shade500,
-    ),
-    canvasColor: palette.lily.shade500,
-    scaffoldBackgroundColor: palette.lily.shade500,
-  );
-
   /// A [CupertinoThemeData] to defines colors from the [palette] on cupertino
   /// Flutter elements
   late final CupertinoThemeData cupertinoLightTheme = CupertinoThemeData(

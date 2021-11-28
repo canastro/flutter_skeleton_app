@@ -1,3 +1,29 @@
 {
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "missingRequiredField": "{field} is required.",
+  "@missingRequiredField": {
+    "placeholders": {
+      "field": {}
+    }
+  },
+  "minLength": "{field} must have more than {value} characters.",
+  "@minLength": {
+    "placeholders": {
+      "field": {},
+      "value": {}
+    }
+  },
+  "maxLength": "{field} must have less than {value} characters.",
+  "@maxLength": {
+    "placeholders": {
+      "field": {},
+      "value": {}
+    }
+  },
+  "invalidEmail": "Sorry, we don’t recognize this e-mail format.",
+  "invalidCredentials": "Your e-mail or password are incorrect.",
+  "unexpectedError": "Something unexpected occurred.",
+  "email": "E-mail",
+  "password": "Password",
+  "submit": "Submit"
 }
