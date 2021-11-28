@@ -1,0 +1,66 @@
+name: picasso
+description: Design system for rows flutter apps
+version: 0.0.1
+homepage: rows.com
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^1.0.4
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/fonts/
+  fonts:
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Urbanist-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/Urbanist-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Urbanist-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/Urbanist-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Urbanist-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Urbanist-Regular.ttf
+        - asset: assets/fonts/Urbanist-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Urbanist-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/Urbanist-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Urbanist-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Urbanist-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Urbanist-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Urbanist-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Urbanist-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/Urbanist-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Urbanist-BlackItalic.ttf
+          weight: 900
+          style: italic
+        
