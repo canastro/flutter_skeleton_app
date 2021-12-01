@@ -6,7 +6,7 @@
 #    * sh scripts/clean.sh packages
 #
 
-function run_clean() {
+function run_clean {
   flutter pub get
 
   if [ -d "packages" ]

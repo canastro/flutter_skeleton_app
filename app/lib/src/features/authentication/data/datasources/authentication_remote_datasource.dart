@@ -10,6 +10,7 @@ abstract class AuthenticationRemoteDataSource {
 
 class AuthenticationRemoteDataSourceImpl
     implements AuthenticationRemoteDataSource {
+  // ignore: unused_field
   final HttpClient _httpClient;
 
   AuthenticationRemoteDataSourceImpl(this._httpClient);

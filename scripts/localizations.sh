@@ -1,4 +1,4 @@
-generate_localizations() {
+function generate_localizations {
     cat l10n.yaml &>/dev/null && echo "Found localizations config in $path" && flutter gen-l10n
 }
 
