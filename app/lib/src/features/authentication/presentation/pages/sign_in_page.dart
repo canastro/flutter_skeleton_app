@@ -54,79 +54,82 @@ class _SignInPageState extends State<SignInPage> {
 
     return SafeArea(
       child: Scaffold(
-        body: Form(
-          key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                localization.signIn,
-                style: theme.textTheme.headline2!.copyWith(
-                  color: picassoPalette.green.shade900,
-                ),
-              ),
-              const Spacing(multiplier: 4),
-              TextFormField(
-                controller: emailTextController,
-                validator: ValidationBuilder(
-                  requiredMessage: localization.missingRequiredField(
-                    localization.email,
+        body: Padding(
+          padding: EdgeInsets.all(applySpacing(4.0)),
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  localization.signIn,
+                  style: theme.textTheme.headline2!.copyWith(
+                    color: picassoPalette.green.shade900,
                   ),
-                ).email(localization.invalidEmail).build(),
-                keyboardType: TextInputType.emailAddress,
-                autofocus: true,
-                autocorrect: false,
-                focusNode: emailFocus,
-                onFieldSubmitted: (_) {
-                  emailFocus.requestFocus();
-                  handleSubmitForm();
-                },
-                decoration: InputDecoration(
-                  labelText: localization.email,
                 ),
-              ),
-              const Spacing(multiplier: 2),
-              TextFormField(
-                controller: passwordTextController,
-                onFieldSubmitted: (_) {
-                  passwordFocus.requestFocus();
-                  handleSubmitForm();
-                },
-                focusNode: passwordFocus,
-                validator: ValidationBuilder(
-                  requiredMessage: localization.missingRequiredField(
-                    localization.password,
+                const Spacing(multiplier: 4),
+                TextFormField(
+                  controller: emailTextController,
+                  validator: ValidationBuilder(
+                    requiredMessage: localization.missingRequiredField(
+                      localization.email,
+                    ),
+                  ).email(localization.invalidEmail).build(),
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: true,
+                  autocorrect: false,
+                  focusNode: emailFocus,
+                  onFieldSubmitted: (_) {
+                    emailFocus.requestFocus();
+                    handleSubmitForm();
+                  },
+                  decoration: InputDecoration(
+                    labelText: localization.email,
                   ),
-                )
-                    .minLength(
-                      _kPasswordMin,
-                      localization.minLength(
-                        localization.password,
+                ),
+                const Spacing(multiplier: 2),
+                TextFormField(
+                  controller: passwordTextController,
+                  onFieldSubmitted: (_) {
+                    passwordFocus.requestFocus();
+                    handleSubmitForm();
+                  },
+                  focusNode: passwordFocus,
+                  validator: ValidationBuilder(
+                    requiredMessage: localization.missingRequiredField(
+                      localization.password,
+                    ),
+                  )
+                      .minLength(
                         _kPasswordMin,
-                      ),
-                    )
-                    .maxLength(
-                      _kPasswordMax,
-                      localization.maxLength(
-                        localization.password,
+                        localization.minLength(
+                          localization.password,
+                          _kPasswordMin,
+                        ),
+                      )
+                      .maxLength(
                         _kPasswordMax,
-                      ),
-                    )
-                    .build(),
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: localization.password,
+                        localization.maxLength(
+                          localization.password,
+                          _kPasswordMax,
+                        ),
+                      )
+                      .build(),
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: localization.password,
+                  ),
                 ),
-              ),
-              if (authenticationState is AuthStateError)
-                ServerError(state: authenticationState),
-              const Spacing(multiplier: 2),
-              ElevatedButton(
-                child: Text(localization.submit),
-                onPressed: handleSubmitForm,
-              ),
-            ],
+                if (authenticationState is AuthStateError)
+                  ServerError(state: authenticationState),
+                const Spacing(multiplier: 2),
+                ElevatedButton(
+                  child: Text(localization.submit),
+                  onPressed: handleSubmitForm,
+                ),
+              ],
+            ),
           ),
         ),
       ),
