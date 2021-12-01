@@ -20,6 +20,9 @@ jobs:
         with:
           channel: stable
 
+      - name: Install
+        run: make install
+
       - name: Format
         run: make format
 

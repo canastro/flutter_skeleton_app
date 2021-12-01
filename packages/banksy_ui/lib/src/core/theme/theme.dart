@@ -10,10 +10,10 @@ ThemeData generateThemeData(BanksyUiPaletteBase palette) {
   final _colorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: palette.primary.main,
-    primaryContainer: palette.primary.dark,
+    primaryVariant: palette.primary.dark,
     onPrimary: palette.primary.contrast,
     secondary: palette.secondary.main,
-    secondaryContainer: palette.secondary.dark,
+    secondaryVariant: palette.secondary.dark,
     onSecondary: palette.secondary.contrast,
     surface: palette.white,
     onSurface: palette.black,
