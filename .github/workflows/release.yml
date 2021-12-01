@@ -1,0 +1,156 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Format
+        run: make format
+
+      - name: Analyze
+        run: make analyze
+
+      - name: Install
+        run: make install
+
+      - name: Localizations
+        run: make localizations
+
+      - name: Test
+        run: make test
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Install
+        run: make install
+
+      - name: Localizations
+        run: make localizations
+
+      - name: Test
+        run: make test
+
+  build_ios:
+    runs-on: macos-latest
+    needs: [test, analysis]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      #
+      # Install certificates
+      #
+      - name: "Import Certificate: Development"
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.DEVELOPER_ID_P12 }}
+          p12-password: ${{ secrets.DEVELOPER_ID_PASSWORD }}
+
+      #
+      # Install & build app
+      #
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Install
+        run: make install
+
+      - name: Localizations
+        run: make localizations
+
+      - name: Build
+        run: flutter build ios --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --dart-define SENTRY_DNS=${{ env.SENTRY_DNS }}
+        working-directory: app
+
+  build_android:
+    runs-on: ubuntu-latest
+    needs: [test, analysis]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      #
+      # Install & build app
+      #
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Install
+        run: make install
+
+      - name: Localizations
+        run: make localizations
+
+      - name: Build
+        run: flutter build android --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --dart-define SENTRY_DNS=${{ env.SENTRY_DNS }}
+        working-directory: app
+
+  upload_to_slack:
+    runs-on: ubuntu-latest
+    needs: [build_ios, build_android]
+    steps:
+      - name: Notify slack
+        uses: archive/github-actions-slack@v2.3.1
+        id: notify
+        with:
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel: app-release
+          slack-text: ✨✨✨✨ A new version is published! See details of the changes <https://github.com/canastro/flutter_skeleton_app/releases/tag/${{ github.event.inputs.tag }}|here>
+
+  bump_pubspec_version:
+    runs-on: ubuntu-latest
+    needs: [build_ios, build_android]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Setup dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install Cider
+        run: pub global activate cider
+
+      - name: Bump version
+        run: |
+          git config --global user.email "bot@users.noreply.github.com"
+          git config --global user.name "Bot"
+          git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          git pull github main --ff-only
+          cider version ${{ github.event.release.tag_name }}
+        working-directory: app
+
+      - name: Push bump
+        run: |
+          git add .
+          if [ -z "$(git status --porcelain)" ]; then
+            exit 0
+          fi
+          git commit -m "Bump to ${{ github.event.release.tag_name }}"
+          git push github main

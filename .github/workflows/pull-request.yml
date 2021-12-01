@@ -1,0 +1,64 @@
+name: pull-request
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Format
+        run: make format
+
+      - name: Analyze
+        run: make analyze
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Install
+        run: make install
+
+      - name: Localizations
+        run: make localizations
+
+      - name: Test app
+        run: ./scripts/test.sh app
+
+      - name: Upload test app artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-test-artifacts
+          path: app/test/**/failures/
+
+      - name: Test packages
+        run: ./scripts/test.sh packages
+
+      - name: Upload test packages artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: packages-test-artifacts
+          path: packages/**/test/**/failures/

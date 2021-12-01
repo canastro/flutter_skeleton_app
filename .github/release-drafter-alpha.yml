@@ -1,0 +1,25 @@
+name-template: '$NEXT_PATCH_VERSION-alpha'
+tag-template: '$NEXT_PATCH_VERSION'
+change-template: '- $TITLE by @$AUTHOR (#$NUMBER)'
+no-changes-template: '🤷 No changes here'
+categories:
+  - title: '🚀 Features'
+    label: 'feature'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+exclude-labels:
+  - 'skip-changelog'
+autolabeler:
+  - label: 'bug'
+    title:
+      - '/fix/i'
+  - label: 'feature'
+    title:
+      - '/feature/i'
+
+template: |
+  ## Changes
+  $CHANGES

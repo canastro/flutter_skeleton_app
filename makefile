@@ -39,9 +39,6 @@ clean: ## Cleaning the whole project.
 	@sh ./scripts/clean.sh packages
 	@sh ./scripts/clean.sh app
 
-build: ## Install and create localizations.
-build: install localizations
-
 launch: ## Run the app.
 	@echo "╠ Running the project..."
 	@cd app; flutter run -t lib/main_qa.dart
