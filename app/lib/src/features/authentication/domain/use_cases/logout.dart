@@ -11,7 +11,5 @@ class LogoutUseCaseImpl implements LogoutUseCase {
   LogoutUseCaseImpl(this.repository);
 
   @override
-  Future<void> call() async {
-    await repository.logout();
-  }
+  Future<void> call() => repository.logout();
 }

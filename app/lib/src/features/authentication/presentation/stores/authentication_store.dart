@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_skeleton_app/src/core/data/http_client.dart';
 
-import '../../../../../config/app_config.dart';
 import '../../../../core/data/exceptions.dart';
 import '../../../../di/di.dart';
+import '../../di.dart';
 import '../../domain/use_cases/authenticate_user.dart';
 import '../../domain/use_cases/load_session.dart';
 import '../../domain/use_cases/logout.dart';
@@ -38,7 +37,6 @@ class AuthenticationStore extends ValueNotifier<AuthState> {
   final AuthenticateUserUseCase _authenticateUserUseCase =
       getIt<AuthenticateUserUseCase>();
   final LoadSessionUseCase _loadSessionUseCase = getIt<LoadSessionUseCase>();
-  final LogoutUseCase _logoutUseCase = getIt<LogoutUseCase>();
   final HttpClient _httpClient = getIt<HttpClient>();
 
   VoidCallback? resetAuthenticatedDependencies;
@@ -78,12 +76,13 @@ class AuthenticationStore extends ValueNotifier<AuthState> {
   void _handleAuthenticated(String session) {
     _httpClient.session = session;
 
-    // resetAuthenticatedDependencies =
-    //     registerAuthenticatedDependencies(client, getIt);
+    resetAuthenticatedDependencies = registerAuthenticatedDependencies();
   }
 
   /// Calls [LogoutUseCase] and resets the state to it's initial value.
   Future<void> logout({bool? unauthorized}) async {
+    final _logoutUseCase = getIt<LogoutUseCase>();
+
     try {
       await _logoutUseCase();
     } finally {

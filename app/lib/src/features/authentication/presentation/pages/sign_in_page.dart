@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_skeleton_app/config/routes.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:banksy_ui/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -29,6 +30,10 @@ class _SignInPageState extends State<SignInPage> {
   final emailFocus = FocusNode();
   final passwordFocus = FocusNode();
 
+  /// Handles form submission.
+  ///
+  /// If form is valid it calls [authenticate] and if successful, redirects
+  /// to the appropriate home route.
   Future<void> handleSubmitForm() async {
     if (formKey.currentState == null || !formKey.currentState!.validate()) {
       return;
@@ -41,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
       passwordTextController.value.text,
     );
 
-    // Navigator.pushReplacementNamed(context, kWorkspaceRoute);
+    Navigator.pushReplacementNamed(context, kHomeRoute);
   }
 
   @override
@@ -159,10 +164,7 @@ class ServerError extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Text(
-        text,
-        style: textStyle,
-      ),
+      child: Text(text, style: textStyle),
     );
   }
 }

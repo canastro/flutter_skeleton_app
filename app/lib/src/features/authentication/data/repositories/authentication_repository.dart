@@ -24,13 +24,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   /// Clears [AuthenticationLocalDataSource] session token.
   @override
   Future<void> logout() async {
-    await localDataSource.clearSessionToken();
+    localDataSource.clearSessionToken();
+    await remoteDataSource.logout();
   }
 
   /// Loads session from [AuthenticationLocalDataSource].
   @override
-  Future<String?> loadSession() async {
-    final session = await localDataSource.getSessionToken();
-    return session;
-  }
+  Future<String?> loadSession() => localDataSource.getSessionToken();
 }
