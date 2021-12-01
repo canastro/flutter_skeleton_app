@@ -20,14 +20,14 @@
             "program": "lib/main_qa.dart",
         },
         {
-            "name": "picasso",
-            "cwd": "packages/picasso",
+            "name": "banksy_ui",
+            "cwd": "packages/banksy_ui",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "picasso (profile mode)",
-            "cwd": "packages/picasso",
+            "name": "banksy_ui (profile mode)",
+            "cwd": "packages/banksy_ui",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"

@@ -1,4 +1,4 @@
-name: picasso
+name: banksy_ui
 description: Design system for rows flutter apps
 version: 0.0.1
 homepage: rows.com
@@ -63,4 +63,4 @@ flutter:
         - asset: assets/fonts/Urbanist-BlackItalic.ttf
           weight: 900
           style: italic
-        
+

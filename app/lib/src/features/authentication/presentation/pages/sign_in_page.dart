@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
-import 'package:picasso/core.dart';
+import 'package:banksy_ui/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:picasso/widgets.dart';
+import 'package:banksy_ui/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../stores/authentication_store.dart';
@@ -46,9 +46,9 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = PicassoData.themeOf(context);
+    final theme = BanksyUiData.themeOf(context);
     final localization = AppLocalizations.of(context)!;
-    final picassoPalette = PicassoPalette.of(context);
+    final picassoPalette = BanksyUiPalette.of(context);
     final authenticationStore = context.watch<AuthenticationStore>();
     final authenticationState = authenticationStore.value;
 
@@ -63,7 +63,7 @@ class _SignInPageState extends State<SignInPage> {
               Text(
                 localization.signIn,
                 style: theme.textTheme.headline2!.copyWith(
-                  color: picassoPalette.maroon.shade900,
+                  color: picassoPalette.green.shade900,
                 ),
               ),
               const Spacing(size: 4),
@@ -76,6 +76,7 @@ class _SignInPageState extends State<SignInPage> {
                 ).email(localization.invalidEmail).build(),
                 keyboardType: TextInputType.emailAddress,
                 autofocus: true,
+                autocorrect: false,
                 focusNode: emailFocus,
                 onFieldSubmitted: (_) {
                   emailFocus.requestFocus();

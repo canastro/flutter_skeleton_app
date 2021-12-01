@@ -4,46 +4,46 @@ import 'package:flutter/material.dart';
 import 'palette.dart';
 import 'theme/theme.dart';
 
-/// Defines general data for a picasso context.
+/// Defines general data for a banksy_ui context.
 ///
 /// See also:
-/// * [PicassoProvider] : Makes a [PicassoData] accessible in a subtree
-class PicassoData {
-  /// Access the [PicassoData] instance provided via [PicassoProvider].
+/// * [BanksyUiProvider] : Makes a [BanksyUiData] accessible in a subtree
+class BanksyUiData {
+  /// Access the [BanksyUiData] instance provided via [BanksyUiProvider].
   ///
-  /// Throws an assertion error if there is no [PicassoProvider] up in the tree.
+  /// Throws an assertion error if there is no [BanksyUiProvider] up in the tree.
   ///
   /// It only reads the context, therefore it doesn't create dependency.
-  static PicassoData of(BuildContext context) {
+  static BanksyUiData of(BuildContext context) {
     final picassoProvider =
-        context.findAncestorWidgetOfExactType<PicassoProvider>();
+        context.findAncestorWidgetOfExactType<BanksyUiProvider>();
     assert(
       picassoProvider != null,
-      'No picasso instance found, this widget must be under a PicassoProvider',
+      'No banksy_ui instance found, this widget must be under a BanksyUiProvider',
     );
     return picassoProvider!.data;
   }
 
   /// Access the [ThemeData] instance provided under [MaterialApp].
   ///
-  /// Keeping this under picasso instead of calling [Theme.of] directly gives
-  /// picasso control of the theming and in a possible subclassing
+  /// Keeping this under banksy_ui instead of calling [Theme.of] directly gives
+  /// banksy_ui control of the theming and in a possible subclassing
   /// of [ThemeData]
   static ThemeData themeOf(BuildContext context) {
     return Theme.of(context);
   }
 
-  /// Creates a picasso data instance
+  /// Creates a banksy_ui data instance
   ///
-  /// [palette] defaults to [PicassoPalette]
-  PicassoData({
-    PicassoPaletteBase? palette,
-  }) : palette = palette ?? PicassoPalette();
+  /// [palette] defaults to [BanksyUiPalette]
+  BanksyUiData({
+    BanksyUiPaletteBase? palette,
+  }) : palette = palette ?? BanksyUiPalette();
 
   /// An underlying palette that will be used to generate themes
   ///
-  /// By default it is an instance of [PicassoPalette]
-  final PicassoPaletteBase palette;
+  /// By default it is an instance of [BanksyUiPalette]
+  final BanksyUiPaletteBase palette;
 
   /// A lighter generated material [ThemeData] using colors from [palette]
   late final ThemeData materialLightTheme = generateThemeData(palette);
@@ -63,9 +63,9 @@ class PicassoData {
 ///
 /// Usually set on the very top of the widget tree.
 ///
-/// This makes [data] accessible for its descendants via [PicassoData.of].
-class PicassoProvider extends InheritedWidget {
-  const PicassoProvider({
+/// This makes [data] accessible for its descendants via [BanksyUiData.of].
+class BanksyUiProvider extends InheritedWidget {
+  const BanksyUiProvider({
     Key? key,
     required Widget child,
     required this.data,
@@ -73,12 +73,12 @@ class PicassoProvider extends InheritedWidget {
 
   /// The data to be exposed for the descendants
   ///
-  /// Accessible via [PicassoData.of].
-  final PicassoData data;
+  /// Accessible via [BanksyUiData.of].
+  final BanksyUiData data;
 
   @override
-  bool updateShouldNotify(PicassoProvider oldWidget) {
-    // Picasso data should not be changed.
+  bool updateShouldNotify(BanksyUiProvider oldWidget) {
+    // BanksyUi data should not be changed.
     assert(data == oldWidget.data);
     return false;
   }

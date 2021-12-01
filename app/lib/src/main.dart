@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:picasso/core.dart';
+import 'package:banksy_ui/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +17,9 @@ void mainWithConfig(AppConfig config) {
   runApp(
     ChangeNotifierProvider<AuthenticationStore>(
       create: (_) => AuthenticationStore(),
-      child: PicassoProvider(
+      child: BanksyUiProvider(
         child: const AppRoot(),
-        data: PicassoData(),
+        data: BanksyUiData(),
       ),
     ),
   );
@@ -43,7 +43,7 @@ class AppRoot extends StatelessWidget {
         Locale('en', ''),
       ],
       debugShowCheckedModeBanner: false,
-      theme: PicassoData.of(context).materialLightTheme,
+      theme: BanksyUiData.of(context).materialLightTheme,
       themeMode: ThemeMode.light,
       routes: {
         kSiginRoute: (context) => const SignInPage(),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../../widgets/spacing.dart';
 import '../palette.dart';
 
-ElevatedButtonThemeData generateElevateButtonTheme(PicassoPaletteBase palette) {
+ElevatedButtonThemeData generateElevateButtonTheme(
+  BanksyUiPaletteBase palette,
+) {
   return ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.resolveWith((states) {
@@ -26,7 +28,7 @@ ElevatedButtonThemeData generateElevateButtonTheme(PicassoPaletteBase palette) {
 }
 
 OutlinedButtonThemeData generateOutlinedButtonTheme(
-  PicassoPaletteBase palette,
+  BanksyUiPaletteBase palette,
 ) {
   return OutlinedButtonThemeData(
     style: ButtonStyle(
@@ -44,7 +46,7 @@ OutlinedButtonThemeData generateOutlinedButtonTheme(
   );
 }
 
-TextButtonThemeData generateTextButtonTheme(PicassoPaletteBase palette) {
+TextButtonThemeData generateTextButtonTheme(BanksyUiPaletteBase palette) {
   return TextButtonThemeData(
     style: ButtonStyle(
       padding: MaterialStateProperty.all(EdgeInsets.zero),

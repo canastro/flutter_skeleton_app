@@ -1,28 +1,20 @@
 import 'package:flutter/material.dart';
 import 'data.dart';
 
-/// Description of color palette on picasso themes
+/// Description of color palette on banksy_ui themes
 ///
-/// It will be used by [PicassoData] to generate theme data for flutter widgets
+/// It will be used by [BanksyUiData] to generate theme data for flutter widgets
 ///
 /// See also:
-/// * [PicassoPalette] : The default implementation of this class
-/// * [PicassoData] : Uses a [PicassoPaletteBase] to generate flutter themes
+/// * [BanksyUiPalette] : The default implementation of this class
+/// * [BanksyUiData] : Uses a [BanksyUiPaletteBase] to generate flutter themes
 ///
-abstract class PicassoPaletteBase {
-  final MaterialColor purple;
+abstract class BanksyUiPaletteBase {
   final MaterialColor mint;
   final MaterialColor red;
   final MaterialColor orange;
   final MaterialColor green;
   final MaterialColor blue;
-  final MaterialColor periwinkle;
-  final MaterialColor cobalt;
-  final MaterialColor gold;
-  final MaterialColor yellow;
-  final MaterialColor lily;
-  final MaterialColor maroon;
-  final MaterialColor poppy;
   final MaterialColor grey;
 
   final Color white;
@@ -38,20 +30,12 @@ abstract class PicassoPaletteBase {
 
   final TextColorFamily text;
 
-  PicassoPaletteBase({
-    required this.purple,
+  BanksyUiPaletteBase({
     required this.mint,
     required this.red,
     required this.orange,
     required this.green,
     required this.blue,
-    required this.periwinkle,
-    required this.cobalt,
-    required this.gold,
-    required this.yellow,
-    required this.lily,
-    required this.maroon,
-    required this.poppy,
     required this.grey,
     required this.white,
     required this.black,
@@ -66,8 +50,8 @@ abstract class PicassoPaletteBase {
   });
 }
 
-/// A default implementation of [PicassoPaletteBase] with predefined colors.
-class PicassoPalette implements PicassoPaletteBase {
+/// A default implementation of [BanksyUiPaletteBase] with predefined colors.
+class BanksyUiPalette implements BanksyUiPaletteBase {
   @override
   late final MaterialColor blue = const MaterialColor(
     0xFF5D9EFA,
@@ -80,57 +64,23 @@ class PicassoPalette implements PicassoPaletteBase {
   );
 
   @override
-  late final MaterialColor cobalt = const MaterialColor(
-    0xFF423C95,
-    <int, Color>{
-      200: Color(0xFFD4D4F9),
-      300: Color(0xFFBDBDF8),
-      400: Color(0xFF928BEE),
-      500: Color(0xFF423C95),
-      600: Color(0xFF393484),
-      900: Color(0xFF242253),
-    },
-  );
-
-  @override
-  late final MaterialColor gold = const MaterialColor(
-    0xFFEDC971,
-    <int, Color>{
-      200: Color(0xFFFEF5DD),
-      400: Color(0xFFFDE8B7),
-      500: Color(0xFFEDC971),
-      900: Color(0xFF493E23),
-    },
-  );
-
-  @override
   late final MaterialColor green = const MaterialColor(
-    0xFF27A083,
+    0XFF39B54A,
     <int, Color>{
-      200: Color(0xFFCEF6EC),
-      500: Color(0xFF27A083),
-      900: Color(0xFF0C3128),
-    },
-  );
-
-  @override
-  late final MaterialColor lily = const MaterialColor(
-    0xFFFBF9F0,
-    <int, Color>{
-      500: Color(0xFFFBF9F0),
-    },
-  );
-
-  @override
-  late final MaterialColor maroon = const MaterialColor(
-    0xFF,
-    <int, Color>{
-      200: Color(0xFFE9E3E7),
-      300: Color(0xFFD3C7D0),
-      500: Color(0xFF9D8196),
-      600: Color(0xFF754F6C),
-      700: Color(0xFF5B3452),
-      900: Color(0xFF3A032D),
+      50: Color(0XFFE7F6E9),
+      100: Color(0XFFC4E9C9),
+      200: Color(0XFF9CDAA5),
+      300: Color(0XFF74CB80),
+      400: Color(0XFF57C065),
+      500: Color(0XFF39B54A),
+      600: Color(0XFF33AE43),
+      700: Color(0XFF2CA53A),
+      800: Color(0XFF249D32),
+      900: Color(0XFF178D22),
+      // 'A100': 'c3ffc8',
+      // 'A200': '90ff99',
+      // 'A400': '5dff6a',
+      // 'A700': '44ff52',
     },
   );
 
@@ -159,43 +109,6 @@ class PicassoPalette implements PicassoPaletteBase {
   );
 
   @override
-  late final MaterialColor periwinkle = const MaterialColor(
-    0xFF9797FF,
-    <int, Color>{
-      200: Color(0xFF9797FF),
-      300: Color(0xFFDCDCFC),
-      400: Color(0xFFCFCFFF),
-      500: Color(0xFF9797FF),
-      900: Color(0xFF3B3B64),
-    },
-  );
-
-  @override
-  late final MaterialColor poppy = const MaterialColor(
-    0xFFFE5537,
-    <int, Color>{
-      200: Color(0xFFFFEEEB),
-      500: Color(0xFFFE5537),
-      700: Color(0xFFB23C27),
-      900: Color(0xFF7F2B1C),
-    },
-  );
-
-  @override
-  late final MaterialColor purple = const MaterialColor(
-    0xFF6D30E7,
-    <int, Color>{
-      100: Color(0xFFF0EFF5),
-      200: Color(0xFFEEE7FC),
-      300: Color(0xFFE1D3FB),
-      500: Color(0xFF6D30E7),
-      600: Color(0xFF622CD2),
-      700: Color(0xFF5827BD),
-      900: Color(0xFF371A74),
-    },
-  );
-
-  @override
   late final MaterialColor red = const MaterialColor(
     0xFFE92F3C,
     <int, Color>{
@@ -203,25 +116,6 @@ class PicassoPalette implements PicassoPaletteBase {
       300: Color(0xFFF8BBBF),
       500: Color(0xFFE92F3C),
       900: Color(0xFF7B191F),
-    },
-  );
-
-  @override
-  late final MaterialColor yellow = const MaterialColor(
-    0xFFFFC800,
-    <int, Color>{
-      50: Color(0xFFFFF6D4),
-      100: Color(0xFFFFF6D4),
-      200: Color(0xFFFFF6D4),
-      300: Color(0xFFFFE480),
-      350: Color(0xFFFFE480),
-      400: Color(0xFFFFE480),
-      500: Color(0xFFFFC800),
-      600: Color(0xFFF0BC00),
-      700: Color(0xFFDFAF00),
-      800: Color(0xFFDFAF00),
-      850: Color(0xFFDFAF00),
-      900: Color(0xFF4C3C00),
     },
   );
 
@@ -271,9 +165,9 @@ class PicassoPalette implements PicassoPaletteBase {
 
   @override
   late final ColorFamily primary = ColorFamily(
-    main: yellow.shade500,
-    light: yellow.shade300,
-    dark: yellow.shade600,
+    main: green.shade500,
+    light: green.shade300,
+    dark: green.shade600,
     contrast: black,
   );
 
@@ -309,8 +203,8 @@ class PicassoPalette implements PicassoPaletteBase {
     hint: black.withOpacity(0.38),
   );
 
-  static PicassoPaletteBase of(BuildContext context) {
-    return PicassoData.of(context).palette;
+  static BanksyUiPaletteBase of(BuildContext context) {
+    return BanksyUiData.of(context).palette;
   }
 }
 

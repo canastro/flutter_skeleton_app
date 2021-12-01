@@ -1,4 +1,4 @@
-name: shooda_app
+name: flutter_skeleton_app
 description: A new Flutter project.
 
 publish_to: 'none'
@@ -18,8 +18,8 @@ dependencies:
   intl: ^0.17.0
 
   # Shooda deps
-  picasso:
-    path: ../packages/picasso
+  banksy_ui:
+    path: ../packages/banksy_ui
 
   # Third party deps
   equatable: ^2.0.0

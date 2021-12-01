@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:shooda_app/src/core/data/http_client.dart';
+import 'package:flutter_skeleton_app/src/core/data/http_client.dart';
 
 import '../../../../../config/app_config.dart';
 import '../../../../core/data/exceptions.dart';

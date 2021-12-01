@@ -1,15 +1,15 @@
-# Picasso
+# BanksyUi
 
 A design system for flutter apps that uses the general Shooda design language.
 
 ## Usage 
 
-To make picasso context accessible in the app:
+To make banksy_ui context accessible in the app:
 
 ```dart
 void main() => runApp(
-    PicassoProvider(
-        data: PicassoData(),
+    BanksyUiProvider(
+        data: BanksyUiData(),
         child: MyApp(),
     ),
 );
@@ -18,7 +18,7 @@ void main() => runApp(
 To access the data use:
 
 ```dart
-PicassoData.of(context);
+BanksyUiData.of(context);
 ```
 
 Then, add it the generated theme into `MaterialApp`: 
@@ -26,7 +26,7 @@ Then, add it the generated theme into `MaterialApp`:
 ```dart
 MaterialApp(
 // ...
-  theme: PicassoData.of(context).materialLightTheme,
+  theme: BanksyUiData.of(context).materialLightTheme,
 // ...
 );
 ```
@@ -34,6 +34,6 @@ MaterialApp(
 Then, the theme can be accessed via:
 
 ```dart
-PicassoData.themeOf(context);
+BanksyUiData.themeOf(context);
 ```
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../core.dart';
 
-/// Defines the group of fonts used on a picasso app
+/// Defines the group of fonts used on a banksy_ui app
 const _kFontFallbacks = ['.AppleSystemUIFont', 'Roboto'];
 
-const _kFontFamily = 'packages/picasso/Urbanist';
+const _kFontFamily = 'packages/banksy_ui/Urbanist';
 
 // A text theme to define font families
-const _kPicassoFontFamilyTextTheme = TextTheme(
+const _kBanksyUiFontFamilyTextTheme = TextTheme(
   headline1: TextStyle(fontFamily: _kFontFamily),
   headline2: TextStyle(fontFamily: _kFontFamily),
   headline3: TextStyle(fontFamily: _kFontFamily),
@@ -29,9 +29,9 @@ const _kDefaultTextStyle = TextStyle(
   overflow: TextOverflow.fade,
 );
 
-/// A [TextTheme] derived form [_kPicassoFontFamilyTextTheme] with proper
+/// A [TextTheme] derived form [_kBanksyUiFontFamilyTextTheme] with proper
 /// font sizes, spacing and baselines defined
-final kPicassoDefaultTextTheme = _kPicassoFontFamilyTextTheme.copyWith(
+final kBanksyUiDefaultTextTheme = _kBanksyUiFontFamilyTextTheme.copyWith(
   headline1: _kDefaultTextStyle.copyWith(
     fontSize: 40,
     height: 1.2,
@@ -130,9 +130,9 @@ final kPicassoDefaultTextTheme = _kPicassoFontFamilyTextTheme.copyWith(
   ),
 );
 
-/// A [TextTheme] derived from [kPicassoDefaultTextTheme] that has a
+/// A [TextTheme] derived from [kBanksyUiDefaultTextTheme] that has a
 /// [TextBaseline.ideographic] as baseline
-final kPicassoDenseTextTheme = const TextTheme(
+final kBanksyUiDenseTextTheme = const TextTheme(
   headline1: TextStyle(textBaseline: TextBaseline.ideographic),
   headline2: TextStyle(textBaseline: TextBaseline.ideographic),
   headline3: TextStyle(textBaseline: TextBaseline.ideographic),
@@ -146,7 +146,7 @@ final kPicassoDenseTextTheme = const TextTheme(
   caption: TextStyle(textBaseline: TextBaseline.ideographic),
   button: TextStyle(textBaseline: TextBaseline.ideographic),
   overline: TextStyle(textBaseline: TextBaseline.ideographic),
-).merge(kPicassoDefaultTextTheme);
+).merge(kBanksyUiDefaultTextTheme);
 
 /// A [Typography] defining [TargetPlatform.ios] as platform
 final _a = Typography.material2018(
@@ -154,25 +154,25 @@ final _a = Typography.material2018(
 );
 
 /// A [Typography] that uses white and black from [_a] and
-/// [kPicassoDefaultTextTheme]
+/// [kBanksyUiDefaultTextTheme]
 ///
 /// It includes all the default font related dimensions.
-Typography generateTypography(PicassoPaletteBase picassoPaletteBase) {
-  final defaultTextTheme = kPicassoDefaultTextTheme.apply(
+Typography generateTypography(BanksyUiPaletteBase picassoPaletteBase) {
+  final defaultTextTheme = kBanksyUiDefaultTextTheme.apply(
     bodyColor: picassoPaletteBase.text.primary,
     displayColor: picassoPaletteBase.text.primary,
   );
-  final denseTextTheme = kPicassoDenseTextTheme.apply(
+  final denseTextTheme = kBanksyUiDenseTextTheme.apply(
     bodyColor: picassoPaletteBase.text.primary,
     displayColor: picassoPaletteBase.text.primary,
   );
   return Typography.material2018(
     englishLike: defaultTextTheme,
     dense: denseTextTheme,
-    white: _a.white.merge(_kPicassoFontFamilyTextTheme).apply(
+    white: _a.white.merge(_kBanksyUiFontFamilyTextTheme).apply(
           decorationColor: picassoPaletteBase.grey.shade700,
         ),
-    black: _a.black.merge(_kPicassoFontFamilyTextTheme).apply(
+    black: _a.black.merge(_kBanksyUiFontFamilyTextTheme).apply(
           decorationColor: picassoPaletteBase.primary.main,
         ),
   );

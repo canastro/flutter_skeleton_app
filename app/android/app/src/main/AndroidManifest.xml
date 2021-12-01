@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shooda_app">
+    package="com.example.flutter_skeleton_app">
    <application
-        android:label="shooda_app"
+        android:label="flutter_skeleton_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

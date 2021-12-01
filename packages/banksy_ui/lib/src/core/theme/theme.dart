@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core.dart';
 import 'buttons_themes.dart';
 
-/// Generates a [ThemeData] for the provided [PicassoPaletteBase]
-ThemeData generateThemeData(PicassoPaletteBase palette) {
+/// Generates a [ThemeData] for the provided [BanksyUiPaletteBase]
+ThemeData generateThemeData(BanksyUiPaletteBase palette) {
   /// A material [ColorScheme] that defines shades of colors from palette to be
   /// used on the generation of lighter themes
   final _colorScheme = ColorScheme(
@@ -26,7 +26,7 @@ ThemeData generateThemeData(PicassoPaletteBase palette) {
   final typography = generateTypography(palette);
 
   return ThemeData(
-    primarySwatch: palette.yellow,
+    primarySwatch: palette.green,
     visualDensity: const VisualDensity(),
     colorScheme: _colorScheme,
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -41,7 +41,7 @@ ThemeData generateThemeData(PicassoPaletteBase palette) {
     typography: typography,
     appBarTheme: AppBarTheme(
       elevation: 0,
-      backgroundColor: palette.maroon.shade900,
+      backgroundColor: palette.green.shade900,
       foregroundColor: palette.white,
       titleTextStyle: typography.white.headline3,
       toolbarTextStyle: typography.white.bodyText1,
@@ -60,7 +60,7 @@ ThemeData generateThemeData(PicassoPaletteBase palette) {
       preferBelow: false,
       showDuration: Duration.zero,
       decoration: BoxDecoration(
-        color: palette.maroon.shade900,
+        color: palette.green.shade900,
         boxShadow: [
           BoxShadow(
             color: palette.black.withOpacity(0.25),

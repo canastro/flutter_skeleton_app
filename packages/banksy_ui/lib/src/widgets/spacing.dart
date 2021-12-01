@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
 /// How many pixels a spacing unit represents
-const double kPicassoSpaceUnit = 8.0;
+const double kBanksyUiSpaceUnit = 8.0;
 
 /// Converts a [number] of spacing units to pixels
-double applySpacing(num number) => number * kPicassoSpaceUnit;
+double applySpacing(num number) => number * kBanksyUiSpaceUnit;
 
 /// A [StatelessWidget] that assumes a [size] in spacing units in the
 /// given [direction].
