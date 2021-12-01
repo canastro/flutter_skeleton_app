@@ -12,7 +12,7 @@ then
     generate_localizations
 else
     for d in ./*/ ; do
-      echo "Installing deps on package $d"
+      echo "Generating localization files on package $d"
       (cd "$d" && generate_localizations);
     done
 fi

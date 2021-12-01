@@ -6,7 +6,7 @@
 #    * sh scripts/test.sh packages
 #
 
-function run_tests {
+function run_tests() {
   # Keep track if any of the tests failed without actually
   # stoping the following tests from executing
   exitCode=0
