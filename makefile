@@ -1,4 +1,4 @@
-SHELL = /bin/sh
+SHELL = /usr/bin/sh
 .PHONY: clean localizations analyze install format test launch
 
 help: ## This help dialog.
