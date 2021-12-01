@@ -1,4 +1,4 @@
-function generate_localizations {
+generate_localizations() {
     cat l10n.yaml &>/dev/null && echo "Found localizations config in $path" && flutter gen-l10n
 }
 
@@ -12,7 +12,7 @@ then
     generate_localizations
 else
     for d in ./*/ ; do
-      echo "Generating localization files on package $d"
+      echo "Installing deps on package $d"
       (cd "$d" && generate_localizations);
     done
 fi
