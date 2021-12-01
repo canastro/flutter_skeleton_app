@@ -66,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
                   color: picassoPalette.green.shade900,
                 ),
               ),
-              const Spacing(size: 4),
+              const Spacing(multiplier: 4),
               TextFormField(
                 controller: emailTextController,
                 validator: ValidationBuilder(
@@ -86,7 +86,7 @@ class _SignInPageState extends State<SignInPage> {
                   labelText: localization.email,
                 ),
               ),
-              const Spacing(size: 2),
+              const Spacing(multiplier: 2),
               TextFormField(
                 controller: passwordTextController,
                 onFieldSubmitted: (_) {
@@ -121,7 +121,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               if (authenticationState is AuthStateError)
                 ServerError(state: authenticationState),
-              const Spacing(size: 2),
+              const Spacing(multiplier: 2),
               ElevatedButton(
                 child: Text(localization.submit),
                 onPressed: handleSubmitForm,
