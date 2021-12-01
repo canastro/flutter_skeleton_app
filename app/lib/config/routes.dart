@@ -1,2 +1,2 @@
-const kHomeRoute = '/';
+const kHomeRoute = '/home';
 const kSiginRoute = '/signin';

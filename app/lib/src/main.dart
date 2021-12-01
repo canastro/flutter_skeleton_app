@@ -9,6 +9,7 @@ import '../config/routes.dart';
 import 'di/di.dart';
 import 'features/authentication/presentation/pages/sign_in_page.dart';
 import 'features/authentication/presentation/stores/authentication_store.dart';
+import 'features/home/presentation/pages/home_page.dart';
 import 'features/shared/widgets/type_builder.dart';
 
 void mainWithConfig(AppConfig config) {
@@ -47,13 +48,14 @@ class AppRoot extends StatelessWidget {
       themeMode: ThemeMode.light,
       routes: {
         kSiginRoute: (context) => const SignInPage(),
+        kHomeRoute: (context) => const HomePage(),
       },
-      home: _Home(),
+      home: _InitialPage(),
     );
   }
 }
 
-class _Home extends StatelessWidget {
+class _InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authenticationStore = context.watch<AuthenticationStore>();
@@ -63,7 +65,7 @@ class _Home extends StatelessWidget {
       typeBuilders: {
         AuthStateAuthenticated: TypeBuilderFactory<AuthStateAuthenticated>(
           (context, state) {
-            return const Text('Logged');
+            return const HomePage();
           },
         ),
         AuthStateInitial: TypeBuilderFactory<AuthStateInitial>(
