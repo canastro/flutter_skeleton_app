@@ -1,3 +1,4 @@
+SHELL = /bin/sh
 .PHONY: localizations analyze install format test launch
 
 help: ## This help dialog.
@@ -11,7 +12,7 @@ help: ## This help dialog.
 		printf "%-30s %s\n" $$help_command $$help_info ; \
 	done
 
-localizations: ## Generate localizations for app.
+ch: ## Generate localizations for app.
 	@echo "╠ Generating localizations..."
 	@sh ./scripts/localizations.sh app
 
