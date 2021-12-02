@@ -6,9 +6,11 @@ A skeleton to use when creating a new app with flutter.
 
 ## This repo includes
 * Translations
-* Github actions workflows
+* Github actions workflows (not fully tested yet)
 * UI package with theme configuration
 * QA / PROD entrypoints
 * Clean architecture
 * Build scripts and makefile
+* Firebase Analytics
+* Firebase Crashlytics (WIP)
 

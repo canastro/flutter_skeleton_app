@@ -1,4 +1,4 @@
-package com.example.flutter_skeleton_app
+package com.canastro.flutterskeletonapp
 
 import io.flutter.embedding.android.FlutterActivity
 

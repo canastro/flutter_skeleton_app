@@ -1,12 +1,10 @@
-// ignore_for_file: do_not_use_environment
-
 import 'config/app_config.dart';
 import 'src/main.dart';
 
 const _qaConfig = AppConfig(
-  endpointOrigin: 'api.shooda.test',
+  endpointOrigin: 'api.demo.test',
   environment: AppConfigEnvironment.qa,
-  appTitle: 'Shooda - QA',
+  appTitle: 'Flutter Skeleton App - QA',
 );
 
 void main() {
