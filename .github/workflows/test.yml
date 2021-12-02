@@ -50,7 +50,33 @@ jobs:
           alias: ${{ secrets.KEYSTORE_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@master
         with:
-          name: Signed app bundle
+          name: release.apk
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: mapping.txt
+          path: app/build/outputs/mapping/release/mapping.txt
+
+  deploy-play-store:
+    needs: [build_android]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: release.apk
+
+      - uses: actions/download-artifact@master
+        with:
+          name: mapping.txt
+
+      - name: Publish to Play Store internal test track
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          packageName: com.canastro.flutterskeletonapp
+          releaseFiles: app-release-unsigned-signed.apk
+          track: internal
+          mappingFile: mapping.txt

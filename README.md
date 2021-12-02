@@ -37,7 +37,7 @@ This process will eventually be added to the release.yml workflow.
 
 ## Release for android
 ```bash
-keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias FLUTTER_SKELETON_APP_KEYSTORE
+keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias FLUTTER_SKELETON_APP_KEYSTORE -storetype JKS
 
 openssl base64 < ~/upload-keystore.jks | tr -d '\n' | tee upload-keystore.jks.base64.txt
 ```
