@@ -45,7 +45,7 @@ jobs:
         # ID used to access action output
         id: sign_app
         with:
-          releaseDirectory: build/app/outputs/flutter-apk/
+          releaseDirectory: app/build/app/outputs/flutter-apk/
           signingKeyBase64: ${{ secrets.KEYSTORE_SIGNING_KEY }}
           alias: ${{ secrets.KEYSTORE_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
