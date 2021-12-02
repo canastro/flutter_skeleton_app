@@ -14,11 +14,7 @@ jobs:
       - name: Decrypt GoogleServices config
         working-directory: app/ios/Runner
         run: |
-          gpg
-            --quiet \
-            --batch \
-            --yes \
-            --decrypt \
+          gpg --quiet --batch --yes --decrypt \
             --passphrase="$FIREBASE_ENCRYPT_SECRET" \
             --output GoogleService-Info.tar GoogleService-Info.tar.gpg
           tar xvf GoogleService-Info.tar
@@ -26,11 +22,7 @@ jobs:
       - name: Decrypt GoogleServices config
         working-directory: app/android/app
         run: |
-          gpg
-            --quiet \
-            --batch \
-            --yes \
-            --decrypt \
+          gpg --quiet --batch --yes --decrypt \
             --passphrase="$FIREBASE_ENCRYPT_SECRET" \
             --output google-services.tar google-services.tar.gpg
           tar xvf google-services.tar
