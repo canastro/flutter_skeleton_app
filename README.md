@@ -15,6 +15,8 @@ A skeleton to use when creating a new app with flutter.
   * Crashlytics (WIP)
 * CI / CD
   * Github actions workflows (not fully tested yet)
+    * Publish to testflight
+    * Publish to google playstore (WIP)
   * Build scripts and makefile
   * Encrypted firebase configuration files
 
@@ -36,3 +38,12 @@ This process will eventually be added to the release.yml workflow.
 ## Useful links
 * Create gh actions to relase ios: https://github.com/Apple-Actions
 * https://developer.apple.com/documentation/appstoreconnectapi/creating_api_keys_for_app_store_connect_api
+
+
+
+## Release for android
+```bash
+keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias FLUTTER_SKELETON_APP_KEYSTORE
+
+openssl base64 < ~/upload-keystore.jks | tr -d '\n' | tee upload-keystore.jks.base64.txt
+```

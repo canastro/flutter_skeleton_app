@@ -1,0 +1,57 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+
+  build_android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      #
+      # Install & build app
+      #
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
+
+      - name: Install
+        run: make install
+
+      - name: Localizations
+        run: make localizations
+
+      - name: Decrypt GoogleServices config
+        working-directory: app/android/app
+        run: |
+          gpg --quiet --batch --yes --decrypt \
+            --passphrase="$FIREBASE_ENCRYPT_SECRET" \
+            --output google-services.tar google-services.tar.gpg
+          tar xvf google-services.tar
+        env:
+          FIREBASE_ENCRYPT_SECRET: ${{ secrets.FIREBASE_ENCRYPT_SECRET }}
+
+      - name: Build
+        run: flutter build apk --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
+        working-directory: app
+
+      - name: Sign APK
+        uses: r0adkll/sign-android-release@v1
+        name: Sign app APK
+        # ID used to access action output
+        id: sign_app
+        with:
+          releaseDirectory: build/app/outputs/flutter-apk/
+          signingKeyBase64: ${{ secrets.KEYSTORE_SIGNING_KEY }}
+          alias: ${{ secrets.KEYSTORE_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Signed app bundle
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
