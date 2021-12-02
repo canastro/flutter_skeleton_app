@@ -3,6 +3,7 @@ import 'package:banksy_ui/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../config/app_config.dart';
 import '../config/routes.dart';
@@ -13,6 +14,8 @@ import 'features/home/presentation/pages/home_page.dart';
 import 'features/shared/widgets/type_builder.dart';
 
 void mainWithConfig(AppConfig config) {
+  WidgetsFlutterBinding.ensureInitialized();
+
   registerGlobalDependencies(config);
 
   runApp(
@@ -26,32 +29,55 @@ void mainWithConfig(AppConfig config) {
   );
 }
 
-class AppRoot extends StatelessWidget {
+class AppRoot extends StatefulWidget {
   const AppRoot({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<AppRoot> createState() => _AppRootState();
+}
+
+class _AppRootState extends State<AppRoot> {
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     final config = getIt<AppConfig>();
-    return MaterialApp(
-      title: config.appTitle,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', ''),
-      ],
-      debugShowCheckedModeBanner: false,
-      theme: BanksyUiData.of(context).materialLightTheme,
-      themeMode: ThemeMode.light,
-      routes: {
-        kSiginRoute: (context) => const SignInPage(),
-        kHomeRoute: (context) => const HomePage(),
-      },
-      home: _InitialPage(),
-    );
+    return FutureBuilder(
+        future: _initialization,
+        builder: (context, snapshot) {
+          // Check for errors
+          if (snapshot.hasError) {
+            // TODO: Display a better splash error page.
+            return const Text('Failed to load firebase');
+          }
+
+          // Once complete, show your application
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MaterialApp(
+              title: config.appTitle,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en', ''),
+              ],
+              debugShowCheckedModeBanner: false,
+              theme: BanksyUiData.of(context).materialLightTheme,
+              themeMode: ThemeMode.light,
+              routes: {
+                kSiginRoute: (context) => const SignInPage(),
+                kHomeRoute: (context) => const HomePage(),
+              },
+              home: _InitialPage(),
+            );
+          }
+
+          // Otherwise, show something whilst waiting for initialization
+          // to complete
+          return const CircularProgressIndicator();
+        });
   }
 }
 

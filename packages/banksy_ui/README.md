@@ -1,6 +1,6 @@
 # BanksyUi
 
-A design system for flutter apps that uses the general Shooda design language.
+A design system for flutter apps that uses the general FlutterSkeletonApp design language.
 
 ## Usage 
 
