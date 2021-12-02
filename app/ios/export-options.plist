@@ -1,0 +1,24 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+	  <string>app-store</string>
+	  <key>teamID</key>
+	  <string>5HL993SF3B</string>
+	  <key>uploadBitcode</key>
+	  <true/>
+	  <key>compileBitcode</key>
+	  <true/>
+	  <key>uploadSymbols</key>
+	  <true/>
+	  <key>signingStyle</key>
+	  <string>manual</string>
+	  <key>signingCertificate</key>
+	  <string>iPhone Distribution</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.canastro.flutterskeletonapp</key>
+        <string>Flutter Skeleton App Store Provisioning</string>
+    </dict>
+</dict>
+</plist>

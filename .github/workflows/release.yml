@@ -1,59 +1,64 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+# on:
+#   release:
+#     types: [published]
 
 jobs:
-  analysis:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # analysis:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Install flutter
-        uses: subosito/flutter-action@master
-        with:
-          channel: stable
+  #     - name: Install flutter
+  #       uses: subosito/flutter-action@master
+  #       with:
+  #         channel: stable
 
-      - name: Format
-        run: make format
+  #     - name: Format
+  #       run: make format
 
-      - name: Analyze
-        run: make analyze
+  #     - name: Analyze
+  #       run: make analyze
 
-      - name: Install
-        run: make install
+  #     - name: Install
+  #       run: make install
 
-      - name: Localizations
-        run: make localizations
+  #     - name: Localizations
+  #       run: make localizations
 
-      - name: Test
-        run: make test
+  #     - name: Test
+  #       run: make test
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Install flutter
-        uses: subosito/flutter-action@master
-        with:
-          channel: stable
+  #     - name: Install flutter
+  #       uses: subosito/flutter-action@master
+  #       with:
+  #         channel: stable
 
-      - name: Install
-        run: make install
+  #     - name: Install
+  #       run: make install
 
-      - name: Localizations
-        run: make localizations
+  #     - name: Localizations
+  #       run: make localizations
 
-      - name: Test
-        run: make test
+  #     - name: Test
+  #       run: make test
 
   build_ios:
     runs-on: macos-latest
-    needs: [test, analysis]
+    # needs: [test, analysis]
+    timeout-minutes: 60
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -64,8 +69,17 @@ jobs:
       - name: "Import Certificate: Development"
         uses: apple-actions/import-codesign-certs@v1
         with:
-          p12-file-base64: ${{ secrets.DEVELOPER_ID_P12 }}
-          p12-password: ${{ secrets.DEVELOPER_ID_PASSWORD }}
+          p12-file-base64: ${{ secrets.SIGNING_CERTIFICATE_P12_DATA }}
+          p12-password: ${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}
+
+      - name: 'Download Provisioning Profiles'
+        uses: apple-actions/download-provisioning-profiles@v1
+        with:
+          bundle-id: 'com.canastro.flutterskeletonapp'
+          profile-type: 'IOS_APP_STORE'
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
       #
       # Install & build app
@@ -82,45 +96,71 @@ jobs:
         run: make localizations
 
       - name: Build
-        run: flutter build ios --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --dart-define SENTRY_DNS=${{ env.SENTRY_DNS }}
+        run: flutter build ios --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
         working-directory: app
 
-  build_android:
-    runs-on: ubuntu-latest
-    needs: [test, analysis]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Archive
+        run: |
+          xcodebuild \
+            -workspace ./app/ios/Runner.xcworkspace \
+            -config Release \
+            -scheme Runner \
+            -archivePath ./app/ios/build/flutterskeletonapp.xcarchive \
+            -destination 'generic/platform=iOS' \
+            archive
 
-      #
-      # Install & build app
-      #
-      - name: Install flutter
-        uses: subosito/flutter-action@master
+      - name: Xcode Export Archive
+        run: |
+          xcodebuild \
+            -archivePath ./app/ios/build/flutterskeletonapp.xcarchive \
+            -exportArchive \
+            -exportPath ./ \
+            -exportOptionsPlist ./app/ios/export-options.plist
+
+      - name: 'Upload app to TestFlight'
+        uses: apple-actions/upload-testflight-build@v1
         with:
-          channel: stable
+          app-path: 'flutterskeletonapp.ipa'
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_PRIVATE_KEY }}
 
-      - name: Install
-        run: make install
+  # build_android:
+  #   runs-on: ubuntu-latest
+  #   needs: [test, analysis]
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Localizations
-        run: make localizations
+  #     #
+  #     # Install & build app
+  #     #
+  #     - name: Install flutter
+  #       uses: subosito/flutter-action@master
+  #       with:
+  #         channel: stable
 
-      - name: Build
-        run: flutter build android --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --dart-define SENTRY_DNS=${{ env.SENTRY_DNS }}
-        working-directory: app
+  #     - name: Install
+  #       run: make install
 
-  upload_to_slack:
-    runs-on: ubuntu-latest
-    needs: [build_ios, build_android]
-    steps:
-      - name: Notify slack
-        uses: archive/github-actions-slack@v2.3.1
-        id: notify
-        with:
-          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          slack-channel: app-release
-          slack-text: ✨✨✨✨ A new version is published! See details of the changes <https://github.com/canastro/flutter_skeleton_app/releases/tag/${{ github.event.inputs.tag }}|here>
+  #     - name: Localizations
+  #       run: make localizations
+
+  #     - name: Build
+  #       run: flutter build android --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --dart-define SENTRY_DNS=${{ env.SENTRY_DNS }}
+  #       working-directory: app
+
+  # upload_to_slack:
+  #   runs-on: ubuntu-latest
+  #   needs: [build_ios, build_android]
+  #   steps:
+  #     - name: Notify slack
+  #       uses: archive/github-actions-slack@v2.3.1
+  #       id: notify
+  #       with:
+  #         slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
+  #         slack-channel: app-release
+  #         slack-text: ✨✨✨✨ A new version is published! See details of the changes <https://github.com/canastro/flutter_skeleton_app/releases/tag/${{ github.event.inputs.tag }}|here>
 
   bump_pubspec_version:
     runs-on: ubuntu-latest

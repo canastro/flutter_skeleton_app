@@ -40,3 +40,7 @@ app/ios/Pods/FirebaseCrashlytics/upload-symbols \
 ```
 
 This process will eventually be added to the release.yml workflow.
+
+## Useful links
+* Create gh actions to relase ios: https://github.com/Apple-Actions
+* https://developer.apple.com/documentation/appstoreconnectapi/creating_api_keys_for_app_store_connect_api
