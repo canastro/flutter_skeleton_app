@@ -77,6 +77,6 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.GCP_SERVICE_ACCOUNT }}
           packageName: com.canastro.flutterskeletonapp
-          releaseFiles: app-release-unsigned-signed.apk
+          releaseFiles: release.apk
           track: internal
           mappingFile: mapping.txt
