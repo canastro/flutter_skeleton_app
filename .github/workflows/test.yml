@@ -42,7 +42,6 @@ jobs:
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
-        name: Sign app APK
         # ID used to access action output
         id: sign_app
         with:
