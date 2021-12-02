@@ -1,9 +1,13 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:banksy_ui/core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../config/app_config.dart';
 import '../config/routes.dart';
@@ -13,19 +17,29 @@ import 'features/authentication/presentation/stores/authentication_store.dart';
 import 'features/home/presentation/pages/home_page.dart';
 import 'features/shared/widgets/type_builder.dart';
 
-void mainWithConfig(AppConfig config) {
+/// Force enable crashlytics collection enabled if we’re testing it.
+const _kTestingCrashlytics = true;
+
+void mainWithConfig(AppConfig config) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   registerGlobalDependencies(config);
 
-  runApp(
-    ChangeNotifierProvider<AuthenticationStore>(
-      create: (_) => AuthenticationStore(),
-      child: BanksyUiProvider(
-        child: const AppRoot(),
-        data: BanksyUiData(),
-      ),
-    ),
+  await Firebase.initializeApp();
+
+  runZonedGuarded(
+    () {
+      runApp(
+        ChangeNotifierProvider<AuthenticationStore>(
+          create: (_) => AuthenticationStore(),
+          child: BanksyUiProvider(
+            child: const AppRoot(),
+            data: BanksyUiData(),
+          ),
+        ),
+      );
+    },
+    FirebaseCrashlytics.instance.recordError,
   );
 }
 
@@ -37,13 +51,24 @@ class AppRoot extends StatefulWidget {
 }
 
 class _AppRootState extends State<AppRoot> {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  Future<void> _initializeFirebaseApp() async {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+      _kTestingCrashlytics || !kDebugMode,
+    );
+
+    // Pass all uncaught errors to Crashlytics.
+    FlutterExceptionHandler? originalOnError = FlutterError.onError;
+    FlutterError.onError = (FlutterErrorDetails errorDetails) async {
+      await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
+      originalOnError?.call(errorDetails);
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     final config = getIt<AppConfig>();
     return FutureBuilder(
-        future: _initialization,
+        future: _initializeFirebaseApp(),
         builder: (context, snapshot) {
           // Check for errors
           if (snapshot.hasError) {
@@ -53,6 +78,8 @@ class _AppRootState extends State<AppRoot> {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
+            FirebaseCrashlytics.instance.crash();
+
             return MaterialApp(
               title: config.appTitle,
               localizationsDelegates: const [
