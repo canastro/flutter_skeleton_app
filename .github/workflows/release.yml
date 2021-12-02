@@ -1,63 +1,59 @@
 name: Release
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-
-# on:
-#   release:
-#     types: [published]
+  release:
+    types: [published]
 
 jobs:
-  # analysis:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+  analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Install flutter
-  #       uses: subosito/flutter-action@master
-  #       with:
-  #         channel: stable
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
 
-  #     - name: Format
-  #       run: make format
+      - name: Format
+        run: make format
 
-  #     - name: Analyze
-  #       run: make analyze
+      - name: Analyze
+        run: make analyze
 
-  #     - name: Install
-  #       run: make install
+      - name: Install
+        run: make install
 
-  #     - name: Localizations
-  #       run: make localizations
+      - name: Localizations
+        run: make localizations
 
-  #     - name: Test
-  #       run: make test
+      - name: Test
+        run: make test
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  #     - name: Install flutter
-  #       uses: subosito/flutter-action@master
-  #       with:
-  #         channel: stable
+      - name: Install flutter
+        uses: subosito/flutter-action@master
+        with:
+          channel: stable
 
-  #     - name: Install
-  #       run: make install
+      - name: Install
+        run: make install
 
-  #     - name: Localizations
-  #       run: make localizations
+      - name: Localizations
+        run: make localizations
 
-  #     - name: Test
-  #       run: make test
+      - name: Test
+        run: make test
 
   build_ios:
     runs-on: macos-latest
-    # needs: [test, analysis]
+    needs: [test, analysis]
     timeout-minutes: 60
     steps:
       - name: Checkout
