@@ -5,32 +5,24 @@ This is not something I'll support for public usage... Feel free to fork it, cop
 A skeleton to use when creating a new app with flutter.
 
 ## This repo includes
-* Translations
-* Github actions workflows (not fully tested yet)
+* Clean architecture
 * UI package with theme configuration
 * QA / PROD entrypoints
-* Clean architecture
-* Build scripts and makefile
-* Firebase Analytics
-* Firebase Crashlytics (WIP)
+* Dummy authentication workflow
+* Translations
+* Firebase 
+  * Analytics
+  * Crashlytics (WIP)
+* CI / CD
+  * Github actions workflows (not fully tested yet)
+  * Build scripts and makefile
+  * Encrypted firebase configuration files
 
 
 ## Crashlytics
 In order to upload the dSYMs to crashlytics you'll have to:
 
-1.Create archive:
-
-```bash
-xcodebuild \
-  -workspace ./app/ios/Runner.xcworkspace \
-  -config Release \
-  -scheme Runner \
-  -archivePath ./app/ios/build/flutterskeletonapp.xcarchive \
-  -destination 'generic/platform=iOS' \
-  archive
-```
-
-2. Upload dsyms:
+Upload dsyms:
 
 ```bash
 app/ios/Pods/FirebaseCrashlytics/upload-symbols \
