@@ -94,14 +94,12 @@ jobs:
       - name: Decrypt GoogleServices config
         working-directory: app/ios/Runner
         run: |
-          gpg
-            --quiet \
-            --batch \
-            --yes \
-            --decrypt \
+          gpg --quiet --batch --yes --decrypt \
             --passphrase="$FIREBASE_ENCRYPT_SECRET" \
             --output GoogleService-Info.tar GoogleService-Info.tar.gpg
           tar xvf GoogleService-Info.tar
+        env:
+          FIREBASE_ENCRYPT_SECRET: ${{ secrets.FIREBASE_ENCRYPT_SECRET }}
 
       - name: Build
         run: flutter build ios --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
@@ -157,14 +155,12 @@ jobs:
   #     - name: Decrypt GoogleServices config
   #       working-directory: app/android/app
   #       run: |
-  #         gpg
-  #           --quiet \
-  #           --batch \
-  #           --yes \
-  #           --decrypt \
+  #         gpg --quiet --batch --yes --decrypt \
   #           --passphrase="$FIREBASE_ENCRYPT_SECRET" \
   #           --output google-services.tar google-services.tar.gpg
   #         tar xvf google-services.tar
+  #       env:
+  #         FIREBASE_ENCRYPT_SECRET: ${{ secrets.FIREBASE_ENCRYPT_SECRET }}
 
   #     - name: Build
   #       run: flutter build android --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --dart-define SENTRY_DNS=${{ env.SENTRY_DNS }}
