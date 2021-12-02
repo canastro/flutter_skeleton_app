@@ -78,8 +78,6 @@ class _AppRootState extends State<AppRoot> {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            FirebaseCrashlytics.instance.crash();
-
             return MaterialApp(
               title: config.appTitle,
               localizationsDelegates: const [
