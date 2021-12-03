@@ -48,8 +48,7 @@ jobs:
           releaseDirectory: app/build/app/outputs/flutter-apk/
           signingKeyBase64: ${{ secrets.KEYSTORE_SIGNING_KEY }}
           alias: ${{ secrets.KEYSTORE_ALIAS }}
-          # keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Publish to Play Store internal test track
         uses: r0adkll/upload-google-play@v1
