@@ -41,11 +41,11 @@ jobs:
         # run: flutter build appbundle --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
         working-directory: app
 
-      - name: Sign APK
+      - name: Sign App Bundle
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:
-          releaseDirectory: app/build/app/outputs/flutter-apk/
+          releaseDirectory: app/build/app/outputs/bundle/release
           signingKeyBase64: ${{ secrets.KEYSTORE_SIGNING_KEY }}
           alias: ${{ secrets.KEYSTORE_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
