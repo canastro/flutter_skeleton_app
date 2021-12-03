@@ -37,18 +37,19 @@ jobs:
           FIREBASE_ENCRYPT_SECRET: ${{ secrets.FIREBASE_ENCRYPT_SECRET }}
 
       - name: Build
-        run: flutter build apk --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
+        run: flutter build appbundle --no-codesign  --verbose --release -t lib/main_prod.dart --build-name=0.0.2
+        # run: flutter build appbundle --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
         working-directory: app
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
-        # ID used to access action output
         id: sign_app
         with:
           releaseDirectory: app/build/app/outputs/flutter-apk/
           signingKeyBase64: ${{ secrets.KEYSTORE_SIGNING_KEY }}
           alias: ${{ secrets.KEYSTORE_ALIAS }}
           keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Publish to Play Store internal test track
         uses: r0adkll/upload-google-play@v1
@@ -56,5 +57,6 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GCP_SERVICE_ACCOUNT }}
           packageName: com.canastro.flutterskeletonapp
           releaseFiles: ${{steps.sign_app.outputs.signedReleaseFile}}
-          track: production
+          track: internal
+          # track: production
           # mappingFile: app/build/app/outputs/mapping/release/mapping.txt

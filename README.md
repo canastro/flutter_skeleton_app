@@ -37,16 +37,27 @@ This process will eventually be added to the release.yml workflow.
 
 ## Release for android
 ```bash
-
-keytool -genkey -v -keystore ~/upload-keystore.jks -alias FLUTTER_SKELETON_APP_KEYSTORE -keyalg RSA -keysize 2048 -validity 10000
-
+keytool -genkey -v -keystore ~/Documents/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
 # if you need to delete to generate a new one
 keytool -delete -noprompt -alias FLUTTER_SKELETON_APP_KEYSTORE  -keystore ~/upload-keystore.jks -storepass PASSWORD
 
 openssl base64 < ~/upload-keystore.jks | tee upload-keystore.jks.base64.txt
 ```
 
+Create a `app/android/key.properties`:
+
+```
+storePassword=PASSWORD
+keyPassword=PASSWORD
+keyAlias=upload
+storeFile=/Users/username/Documents/upload-keystore.jks
+```
+
+Start by doing a manual release before using the workflow to ship new versions.
+
+
 ## Useful links
 * Create gh actions to relase ios: https://github.com/Apple-Actions
 * https://developer.apple.com/documentation/appstoreconnectapi/creating_api_keys_for_app_store_connect_api
 * https://www.raywenderlich.com/19407406-continuous-delivery-for-android-using-github-actions
+* https://www.freecodecamp.org/news/use-github-actions-to-automate-android-development/
