@@ -66,11 +66,11 @@ android {
     //        storePassword keystoreProperties['storePassword']
     //    }
     // }
+
     buildTypes {
         release {
             // Uncomment if you want to build and sign locally.
             // signingConfig signingConfigs.release
-            // signingConfig signingConfigs.debug
         }
     }
 }
