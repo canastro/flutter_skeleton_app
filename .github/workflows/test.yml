@@ -48,7 +48,8 @@ jobs:
           releaseDirectory: app/build/app/outputs/flutter-apk/
           signingKeyBase64: ${{ secrets.KEYSTORE_SIGNING_KEY }}
           alias: ${{ secrets.KEYSTORE_ALIAS }}
-          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          # keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Publish to Play Store internal test track
         uses: r0adkll/upload-google-play@v1
@@ -56,5 +57,5 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GCP_SERVICE_ACCOUNT }}
           packageName: com.canastro.flutterskeletonapp
           releaseFiles: ${{steps.sign_app.outputs.signedReleaseFile}}
-          track: internal
-          mappingFile: app/build/app/outputs/mapping/release/mapping.txt
+          track: production
+          # mappingFile: app/build/app/outputs/mapping/release/mapping.txt
