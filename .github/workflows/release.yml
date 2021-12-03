@@ -178,7 +178,7 @@ jobs:
           keyPassword: ${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Publish to Play Store internal test track
-        uses: r0adkll/upload-google-play@v1
+        uses: r0adkll/upload-google-play@v1.0.15
         with:
           serviceAccountJsonPlainText: ${{ secrets.GCP_SERVICE_ACCOUNT }}
           packageName: com.canastro.flutterskeletonapp
