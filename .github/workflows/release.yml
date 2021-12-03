@@ -164,7 +164,7 @@ jobs:
           FIREBASE_ENCRYPT_SECRET: ${{ secrets.FIREBASE_ENCRYPT_SECRET }}
 
       - name: Build
-        run: flutter build appbundle --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }}
+        run: flutter build appbundle --verbose --release -t lib/main_prod.dart --build-name=${{ github.event.release.tag_name }} --build-number=$GITHUB_RUN_NUMBER
         working-directory: app
 
       - name: Sign App Bundle
