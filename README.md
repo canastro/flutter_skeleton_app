@@ -36,15 +36,27 @@ app/ios/Pods/FirebaseCrashlytics/upload-symbols \
 This process will eventually be added to the release.yml workflow.
 
 ## Release for android
+
+
+### First manual release
+Start by doing a manual release before using the workflow to ship new versions
+
+1. Generate keystore:
+
 ```bash
 keytool -genkey -v -keystore ~/Documents/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
-# if you need to delete to generate a new one
-keytool -delete -noprompt -alias FLUTTER_SKELETON_APP_KEYSTORE  -keystore ~/upload-keystore.jks -storepass PASSWORD
-
-openssl base64 < ~/upload-keystore.jks | tee upload-keystore.jks.base64.txt
 ```
 
-Create a `app/android/key.properties`:
+2. Change buildTypes `app/android/app/build.gradle`;
+```
+buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+    }
+```
+
+3. Create a `app/android/key.properties`:
 
 ```
 storePassword=PASSWORD
@@ -53,7 +65,17 @@ keyAlias=upload
 storeFile=/Users/username/Documents/upload-keystore.jks
 ```
 
-Start by doing a manual release before using the workflow to ship new versions.
+4. Run `flutter build appbundle --verbose --release -t lib/main_prod.dart --build-name=0.0.1`
+
+5. Upload generated .aab to Playstore.
+
+### Setup GH actions
+
+1. Convert your keystore to base64: 
+```bash
+openssl base64 < ~/upload-keystore.jks | tee upload-keystore.jks.base64.txt
+```
+
 
 
 ## Useful links
